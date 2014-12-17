@@ -11,6 +11,12 @@
 #  Written by Emran Mahbub and Jonathan Li for Gearseven Studios.  
 #  BSD license, all text above must be included in any redistribution
 #  ===========================================================================
+#  VERSIONS
+#
+#  v1.0 - original release
+#  v1.1 - added automatic version check (17.12.14 by Aaron Shaw - shawaj)
+# 
+#  ===========================================================================
 #
 #  INSTALLATION
 #  Place the Hover_library.py file in the same folder as the Hover_example.py file.
@@ -22,9 +28,14 @@
 
 import smbus
 import time
+import RPi.GPIO as GPIO  
 
-#For Raspberry Pi rev1, change this to smbus.SMBus(0). Raspberry Pi rev2 uses smbus.SMBus(1)
-bus = smbus.SMBus(1)   
+# Check for RPi Revision and decide I2C bus
+if GPIO.RPI_REVISION == 1:  
+    bus = smbus.SMBus(0)
+else:
+   bus = smbus.SMBus(1)
+
 
 dict = {'00100010':'Right Swipe', '00100100':'Left Swipe', '00101000':'Up Swipe', '00110000':'Down Swipe', '01001000':'East Tap', '01000001':'South Tap', '01000010':'West Tap', '01000100':'North Tap', '01010000':'Center Tap'}
 
